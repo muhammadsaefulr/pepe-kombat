@@ -45,7 +45,7 @@ export default function Leaderboard() {
           </div>
           <div className="grid grid-rows-auto gap-y-6">
             {leaderboardUserData.map((data, idx) => (
-              <div key={idx} className="flex justify-center text-center text-white gap-x-5 rounded-md bg-primary-purple border border-black shadow-deep-black">
+              <div key={idx} className="flex justify-center text-center text-shadow-outline-black text-white gap-x-5 rounded-md bg-primary-purple border border-black shadow-deep-black">
                 <h2 className="font-semibold text-2xl ">#{data.rank}</h2>
                 <p className="font-semibold text-2xl">
                   {data.username} - {data.balance}

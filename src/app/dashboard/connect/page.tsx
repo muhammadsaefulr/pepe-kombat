@@ -1,6 +1,4 @@
-import { leaderboardUserData } from "@/app/hooks/data-dummy";
 import MenuBar from "@/components/MenuBar";
-import { title } from "process";
 import React from "react";
 
 const dataMenuBar = [
@@ -27,7 +25,7 @@ export default function Connect() {
         <section>
           <div className="bg-primary-yellow border border-black p-2 rounded-md">
             <h2 className="mb-4 font-semibold text-black">Connect To Your Wallet</h2>
-            <img src="/icon/healthicons_money-bag.png" width="30"/>
+            <img src="/icon/healthicons_money-bag.svg" width="30"/>
           </div>
           <div className="flex justify-center py-8">
             <img

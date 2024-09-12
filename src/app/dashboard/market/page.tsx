@@ -20,22 +20,22 @@ const dataMenuBar = [
 
 const dummyDataMarket = [
   {
-    icon: "/icon/healthicons_money-bag.png",
+    icon: "/icon/healthicons_money-bag.svg",
     titleMarket: "Invite your s",
     earnedCoin: 100000,
   },
   {
-    icon: "/icon/healthicons_money-bag.png",
+    icon: "/icon/healthicons_money-bag.svg",
     titleMarket: "Invite your s",
     earnedCoin: 100000,
   },
   {
-    icon: "/icon/healthicons_money-bag.png",
+    icon: "/icon/healthicons_money-bag.svg",
     titleMarket: "Invite your s",
     earnedCoin: 100000,
   },
   {
-    icon: "/icon/healthicons_money-bag.png",
+    icon: "/icon/healthicons_money-bag.svg",
     titleMarket: "Invite your s",
     earnedCoin: 100000,
   },
@@ -51,8 +51,8 @@ export default function Friendlist() {
         <section>
           <div className="flex justify-center py-6">
             <div className="flex p-1 gap-x-2 border text-center rounded-md bg-primary-purple border-black shadow-deep-black w-full">
-              <img width="25" src="/icon/mingcute_lightning-fill.png" />
-              <h2 className="text-white font-semibold text-2xl">Market</h2>
+              <img width="25" src="/icon/mingcute_lightning-fill.svg" />
+              <h2 className="text-white font-semibold text-shadow-outline-black text-2xl">Market</h2>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 py-6">

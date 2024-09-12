@@ -1,5 +1,6 @@
+"use client"
 import MenuBar from "@/components/MenuBar";
-import { title } from "process";
+import { useCoinStore } from "@/lib/zustand/store/coinAndRank";
 import React from "react";
 
 const dataMenuBar = [
@@ -27,6 +28,8 @@ const dataMenuBar = [
 ];
 
 export default function Level() {
+  const { coins, rank } = useCoinStore();
+
   return (
     <div className="">
       <div className="py-9 relative">
@@ -35,7 +38,7 @@ export default function Level() {
         </div>
         <section>
           <div className="bg-primary-purple p-1 flex justify-center rounded-md border border-black shadow-deep-black">
-            <h2 className="font-semibold text-black text-2xl">Boss</h2>
+            <h2 className="font-semibold text-white text-shadow-outline-black text-2xl">{rank}</h2>
           </div>
 
           <div className="flex justify-center py-8">
@@ -47,9 +50,9 @@ export default function Level() {
             />
           </div>
           <div className="flex justify-center text-center gap-x-5 rounded-md bg-primary-yellow border border-black shadow-deep-black">
-            <img src="/icon/healthicons_money-bag.png" width="30" alt="" />
+            <img src="/icon/healthicons_money-bag.svg" width="30" alt="" />
             <h2 className="font-semibold text-2xl  text-black">
-              1.000.000.000
+              {coins}
             </h2>
           </div>
         </section>

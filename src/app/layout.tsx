@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/components/MainLayout";
 import { QueryCache } from "@tanstack/react-query";
 import TanstackQueryClient from "@/components/ReactQuery/QueryClient";
 
-const inter = Inter({ subsets: ["latin"] });
+const DMSans = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pepe Kombat V1",
-  description: "Lorem Ipsum Dolor Sit Amet",
+  description: "Earn Pepe Coin With Easily",
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <TanstackQueryClient>
       <html lang="en">
-        <body className={`${inter.className} bg-yellow`}>{children}</body>
+        <body className={`${DMSans.className} bg-yellow`}>{children}</body>
       </html>
     </TanstackQueryClient>
   );

@@ -1,0 +1,45 @@
+localestring8990
+
+// Define the tables and their relationships
+
+Table users {
+  id int [pk, increment] // Primary key with auto-increment
+  username varchar(255) [unique] // Unique username
+  rank_id int [pk, ref: > ranks.id]
+  email varchar(255) [unique] // Unique email
+  created_at datetime // Account creation date
+}
+
+Table ranks {
+  id int [pk, increment] // Primary key with auto-increment
+  name varchar(255) // Rank name (e.g., Bronze, Silver, Gold)
+  min_points int // Minimum points required to achieve this rank
+}
+
+Table user_coins {
+  user_id int [pk, ref: > users.id] // Foreign key referencing users
+  coins int // Total coins the user has
+  last_coin_update datetime // Timestamp of the last coin update
+}
+
+Table user_points {
+  user_id int [pk, ref: > users.id] // Foreign key referencing users
+  points int // Total points the user has
+}
+
+Table referrals {
+  referrer_id int [ref: > users.id] // Foreign key referencing the user who referred
+  invitee_id int [ref: > users.id] // Foreign key referencing the invited user
+}
+
+Table activities {
+  id int [pk, increment] // Primary key with auto-increment
+  user_id int [ref: > users.id] // Foreign key referencing users
+  activity_type varchar(255) // Type of activity (e.g., "click_coin", "referral_bonus")
+  coins_earned int // Coins earned from this activity
+  timestamp datetime // Time when the activity occurred
+}
+
+// Define relationships
+
+

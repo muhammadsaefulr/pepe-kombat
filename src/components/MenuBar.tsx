@@ -39,7 +39,7 @@ const MenuBar = ({ props }: { props: ComponentsProps[] }) => {
         {MenubarSlice2.map((data, idx) => (
           <Link key={idx} href={data.linkMenu}>
             <button
-              className={`block px-4 py-1 font-semibold border text-black border-black ${shadowClasses[idx]} text-center lg:px-4`}
+              className={`block px-4 py-1 font-semibold border rounded-md text-black border-black ${shadowClasses[idx]} text-center lg:px-4`}
             >
               {data.titleMenu}
             </button>

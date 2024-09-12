@@ -31,7 +31,7 @@ export default function EventPage() {
         <section>
           <div className="bg-primary-yellow flex gap-x-2 border shadow-deep-black border-black p-2 rounded-md">
             <div className="">
-              <img src="/icon/healthicons_money-bag.png" width="50" />
+              <img src="/icon/healthicons_money-bag.svg" width="50" />
             </div>
             <h2 className="mb-4 text-2xl font-semibold text-black">
               Invite your friends to get 100.000 coin!
@@ -52,11 +52,11 @@ export default function EventPage() {
               >
                 <div className="pt-2">
                   <img
-                    src="/icon/mingcute_lightning-fill.png"
+                    src="/icon/mingcute_lightning-fill.svg"
                     className="w-10 h-auto flex-shrink-0"
                   />
                 </div>
-                <p className="font-semibold text-white text-xl flex-1">
+                <p className="font-semibold text-white text-shadow-outline-black text-xl flex-1">
                   {data.eventName} to get {data.rewardCoin}
                 </p>
               </div>

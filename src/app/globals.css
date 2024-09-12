@@ -27,4 +27,18 @@ body {
   }
 }
 
+.text-outlined {
+  -webkit-text-stroke: 0.1 black;
+}
 
+@keyframes float {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}

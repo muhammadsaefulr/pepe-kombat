@@ -8,11 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      textShadow: {
+        "outline-black": "1px 1px 2px black, -1px -1px 2px black",
+      },
       colors: {
         "primary-green": "#82B894",
         "primary-cream": "#E0CF9D",
         "primary-yellow": "#FFD900",
-        "primary-purple": "#8664C3"
+        "primary-purple": "#8664C3",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -26,6 +29,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-textshadow")],
 };
 export default config;

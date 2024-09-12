@@ -1,19 +1,24 @@
-import LoginForm from "@/components/forms/login-forms";
+"use client"
+import SignupForm from "@/components/forms/signup-from";
 import MainLayout from "@/components/MainLayout";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { supabaseClient as supabase } from "@/lib/supabase/supClient";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import React from "react";
+import React, { useEffect } from "react";
 
-export default async function Page() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.auth.getSession();
+export default function Page() {
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-  console.log(data?.session)
+      if (user) {
+        return redirect("/dashboard");
+      }
+    };
 
-  if (data) {
-    return redirect("/dashboard");
-  }
+    getSession();
+  }, []);
 
   return (
     <div className="mx-auto py-9 relative">
@@ -35,7 +40,7 @@ export default async function Page() {
           </div>
 
           <div className="">
-            <LoginForm />
+            <SignupForm />
           </div>
         </section>
       </MainLayout>
