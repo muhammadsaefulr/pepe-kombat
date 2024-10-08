@@ -1,4 +1,5 @@
 localestring8990
+adminpepe24
 
 // Define the tables and their relationships
 

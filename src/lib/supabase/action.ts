@@ -35,7 +35,7 @@ export const signUpAction = async (form: userAuthRegister) => {
 
   const { error: createUserNameError } = await supabase
     .from('profiles')
-    .insert({ id: "d98cda1a-eeed-4c20-97b9-ac5bb8c926b1", username: form.username });
+    .insert({ id: data.user?.id, username: form.username });
 
   if (createUserNameError) {
     console.error(createUserNameError.code + " " + createUserNameError.message);
