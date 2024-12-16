@@ -1,29 +1,21 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
+import { WebApp } from '@twa-dev/types'
 
-interface LoginData {
-  username: string;
-  password: string;
-}
-
-interface LoginResponse {
-  token: string;
-  user: {
-    id: number;
-    username: string;
-  };
-}
-
-interface ProfileData {
-  username: string;
+declare global {
+  interface Window {
+    Telegram?: {
+      WebApp: WebApp
+    }
+  }
 }
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const useLogin = () => {
-  return useMutation<LoginResponse, AxiosError, LoginData>({
-    mutationFn: async (data: LoginData) => {
-      const response = await axios.post(`${apiUrl}/login`, data);
+  return useMutation<any, AxiosError, WebApp>({
+    mutationFn: async (data: WebApp) => {
+      const response = await axios.post(`${apiUrl}/auth/telegram`, data);
       return response.data;
     },
   });

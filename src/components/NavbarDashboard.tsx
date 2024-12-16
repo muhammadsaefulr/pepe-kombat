@@ -1,5 +1,4 @@
 "use client";
-import { supabaseClient as supabase } from "@/lib/supabase/supClient";
 import { useGetProfile } from "@/lib/tanstack/tanstackquery-handler";
 import React, { useEffect, useState } from "react";
 
@@ -12,20 +11,20 @@ export const NavbarDashboard = (props: PageProps) => {
 
   console.log(props.id);
 
-  useEffect(() => {
-    const getDataProfile = async () => {
-      const { data } = await supabase
-        .from("profiles")
-        .select("id,username")
-        .eq("id", props.id);
+  // useEffect(() => {
+  //   const getDataProfile = async () => {
+  //     const { data } = await supabase
+  //       .from("profiles")
+  //       .select("id,username")
+  //       .eq("id", props.id);
 
-      if (data) {
-        setDataProfile(data[0]);
-      }
-    };
+  //     if (data) {
+  //       setDataProfile(data[0]);
+  //     }
+  //   };
 
-    getDataProfile();
-  }, []);
+  //   getDataProfile();
+  // }, []);
 
   console.log(dataProfile?.username);
 

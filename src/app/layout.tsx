@@ -9,7 +9,7 @@ const DMSans = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pepe Kombat V1",
-  description: "Earn Pepe Coin With Easily",
+  description: "Earn Coin With Easily",
 };
 
 export default function RootLayout({

@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  username  String    @unique @db.VarChar(255)
+  rank      Rank      @relation(fields: [rankId], references: [id])
+  rankId    Int
+  email     String    @unique @db.VarChar(255)
+  coinBalance Int     @default(0) 
+  createdAt DateTime  @default(now())
+
+  friendlistAsUser  Friendlist[] @relation("user_friendlist")
+  friendlistAsFriend Friendlist[] @relation("friend_friendlist")
+  referralsReferred Referrals[] @relation("referrer_referrals")
+  referralsReceived Referrals[] @relation("referee_referrals")
+  activities Activity[]
+
+  @@map("users")
+}
+
+model Rank {
+  id        Int      @id @default(autoincrement())
+  rankName  String   @db.VarChar(255)
+  minPoints Int
+  users     User[]
+
+  @@map("ranks")
+}
+
+model Friendlist {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  friendId  Int
+  createdAt DateTime @default(now())
+  status    String   @db.VarChar(50)
+  
+  user   User @relation("user_friendlist", fields: [userId], references: [userId])
+  friend User @relation("friend_friendlist", fields: [friendId], references: [userId])
+
+  @@map("friendlist")
+}
+
+model Referrals {
+  id            Int      @id @default(autoincrement())
+  referrerId    Int
+  refereeId     Int @unique
+  rewardStatus  String   @db.VarChar(50)
+  createdAt     DateTime @default(now())
+
+  referrer User @relation("referrer_referrals", fields: [referrerId], references: [userId])
+  referee  User @relation("referee_referrals", fields: [refereeId], references: [userId])
+
+  @@map("referrals")
+}
+
+model Activity {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  activityType String   @db.VarChar(255)
+  coinsEarned  Int
+  timestamp    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [userId])
+
+  @@map("activities")
+}
+
+// model Transaction {
+//   id           Int       @id @default(autoincrement())
+//   userId       Int
+//   type         String    @db.VarChar(50) // e.g., "income", "expense", "reward"
+//   amount       Int                  // Positive or negative value based on type
+//   balanceAfter Int                  // Coin balance after the transaction
+//   createdAt    DateTime @default(now())
+//   description  String?   @db.VarChar(255) // Optional description of the transaction
+
+//   user User @relation(fields: [userId], references: [userId])
+
+//   @@map("transactions")
+// }

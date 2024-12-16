@@ -1,7 +1,6 @@
 import BottomNavDashboard from "@/components/BottomNavDashboard";
 import MainLayout from "@/components/MainLayout";
 import { NavbarDashboard } from "@/components/NavbarDashboard";
-import { createClientServ } from "@/lib/supabase/supServer";
 import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
@@ -9,22 +8,23 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createClientServ();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // const supabase = createClientServ();
 
-  if (!user) {
-    return redirect("/")
-  } else {
-    console.log(user)
-  }
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
+
+  // if (!user) {
+  //   return redirect("/")
+  // } else {
+  //   console.log(user)
+  // }
 
   return (
     <div className="w-full flex justify-center mx-auto lg:w-1/3">
       <MainLayout>
-        <NavbarDashboard id={user.id} />
+        <NavbarDashboard id={11} />
         {children}
         <BottomNavDashboard />
       </MainLayout>

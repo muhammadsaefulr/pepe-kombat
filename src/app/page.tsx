@@ -1,19 +1,14 @@
-import LoginForm from "@/components/forms/login-forms";
+"use client"
+import LoginTelegramBtn from "@/components/forms/login-telegram";
 import MainLayout from "@/components/MainLayout";
-// import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-// import { redirect } from "next/navigation";
-// import { cookies } from "next/headers";
-import React from "react";
+import { checkAuth } from "@/lib/telegram/telegramAuth";
+import { useEffect } from "react";
 
 export default async function Page() {
-  // const supabase = createServerComponentClient({ cookies });
-  // const { data } = await supabase.auth.getSession();
 
-  // console.log(data?.session)
-
-  // if (data?.session) {
-  //   return redirect("/dashboard");
-  // }
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
 
   return (
     <div className="mx-auto py-9 relative">
@@ -34,8 +29,8 @@ export default async function Page() {
             />
           </div>
 
-          <div className="">
-            <LoginForm />
+          <div className="block">
+            <LoginTelegramBtn/>
           </div>
         </section>
       </MainLayout>
