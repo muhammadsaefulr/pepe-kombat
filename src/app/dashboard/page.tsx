@@ -4,6 +4,7 @@ import {
   useCoinStore,
   useStoreCoinWithLocalStorage,
 } from "@/lib/zustand/store/coinAndRank";
+import Image from "next/image";
 import React, { useEffect, useState, MouseEvent } from "react";
 
 const dataMenuBar = [
@@ -71,7 +72,7 @@ function DashboardUser() {
       </div>
       <section>
         <div className="flex justify-center text-center gap-x-5 rounded-md bg-primary-yellow border border-black shadow-deep-black">
-          <img src="/icon/healthicons_money-bag.svg" width="30" alt="" />
+          <Image src="/icon/healthicons_money-bag.svg" width="30" height="30" alt="" />
           <h2 className="font-semibold text-2xl text-black">{coins}</h2>
         </div>
         <div className="flex justify-center py-8">
@@ -79,6 +80,7 @@ function DashboardUser() {
             <img
               className="rounded-full p-2 border border-black"
               width="310"
+              height="310"
               src="/icon/pepe.svg"
               alt=""
             />

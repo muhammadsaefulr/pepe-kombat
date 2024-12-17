@@ -1,32 +1,11 @@
 "use client";
-import { useGetProfile } from "@/lib/tanstack/tanstackquery-handler";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-interface PageProps {
-  id: any;
+interface NavbarProps {
+  username: string
 }
 
-export const NavbarDashboard = (props: PageProps) => {
-  const [dataProfile, setDataProfile] = useState<any>(null);
-
-  console.log(props.id);
-
-  // useEffect(() => {
-  //   const getDataProfile = async () => {
-  //     const { data } = await supabase
-  //       .from("profiles")
-  //       .select("id,username")
-  //       .eq("id", props.id);
-
-  //     if (data) {
-  //       setDataProfile(data[0]);
-  //     }
-  //   };
-
-  //   getDataProfile();
-  // }, []);
-
-  console.log(dataProfile?.username);
+export const NavbarDashboard: React.FC<NavbarProps> = ({ username }) => {
 
   return (
     <>
@@ -35,7 +14,7 @@ export const NavbarDashboard = (props: PageProps) => {
           <img src="/icon/iconamoon_profile-fill.svg" alt="" />
         </div>
         <p className="text-black text-center py-4 font-semibold text-lg">
-          {dataProfile?.username}
+          {username}
         </p>
       </div>
     </>

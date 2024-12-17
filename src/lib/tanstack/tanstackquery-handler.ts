@@ -1,31 +1,48 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { WebApp } from '@twa-dev/types'
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { WebAppUser } from '@twa-dev/types';
 
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp: WebApp
-    }
-  }
+interface LoginResponse {
+  token: string;
+  user: {
+    id: number;
+    username: string;
+  };
 }
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const useLogin = () => {
-  return useMutation<any, AxiosError, WebApp>({
-    mutationFn: async (data: WebApp) => {
-      const response = await axios.post(`${apiUrl}/auth/telegram`, data);
+  return useMutation<LoginResponse, AxiosError, WebAppUser>({
+    mutationFn: async (data: WebAppUser) => {
+      const response = await axios.post<LoginResponse>(`/api/auth/telegram`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       return response.data;
+    },
+    onError: (error: AxiosError) => {
+      console.error('Login gagal', error.response?.data);
     },
   });
 };
+
+export const useGetSession = () => {
+  return useQuery({
+    queryKey: ['getSession'],
+    queryFn: async () => {
+      const resp = await axios.get(`${apiUrl}/session`);
+      return resp.data.data;
+    },
+  });
+};
+
 
 export const useGetProfile = ({ uid }: { uid: string }) => {
   return useQuery({
     queryKey: ["getProfile", uid],
     queryFn: async () => {
-      console.log("tes uid in tanstack: ",uid);
       if (uid) {
         const response = await axios.get(`${apiUrl}/users/info/${uid}`);
         return response.data;

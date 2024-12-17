@@ -1,14 +1,27 @@
 "use client"
 import LoginTelegramBtn from "@/components/forms/login-telegram";
 import MainLayout from "@/components/MainLayout";
-import { checkAuth } from "@/lib/telegram/telegramAuth";
+import Image from "next/image";
 import { useEffect } from "react";
+import { getSession } from "@/lib/telegram/telegramSession";
+import { useTelegramLogin } from "@/lib/telegram/telegramLogin";
+import { useRouter } from "next/navigation";
+import { useGetSession } from "@/lib/tanstack/tanstackquery-handler";
 
-export default async function Page() {
+export default function Page() {
+
+  const route = useRouter();
+
+  const {data: session, isLoading} = useGetSession();
+  const { authenticateUser } = useTelegramLogin();
 
   useEffect(() => {
-    checkAuth()
-  }, [checkAuth])
+    if (!session) {
+      authenticateUser();
+    } else {
+      route.push("/dashboard")
+    }
+  }, [session]);
 
   return (
     <div className="mx-auto py-9 relative">
@@ -21,8 +34,9 @@ export default async function Page() {
 
         <section className="pt-12">
           <div className="2-50  mx-auto flex justify-center">
-            <img
+            <Image
               width="310"
+              height="310"
               className="rounded-full p-2 border border-black"
               src="/icon/pepe.svg"
               alt="pepe"
@@ -30,7 +44,7 @@ export default async function Page() {
           </div>
 
           <div className="block">
-            <LoginTelegramBtn/>
+            <LoginTelegramBtn />
           </div>
         </section>
       </MainLayout>

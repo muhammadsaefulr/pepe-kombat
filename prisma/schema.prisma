@@ -7,82 +7,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int       @id @default(autoincrement())
-  userId    Int       @unique
-  username  String    @unique @db.VarChar(255)
-  rank      Rank      @relation(fields: [rankId], references: [id])
-  rankId    Int
-  email     String    @unique @db.VarChar(255)
-  coinBalance Int     @default(0) 
-  createdAt DateTime  @default(now())
-
-  friendlistAsUser  Friendlist[] @relation("user_friendlist")
-  friendlistAsFriend Friendlist[] @relation("friend_friendlist")
-  referralsReferred Referrals[] @relation("referrer_referrals")
-  referralsReceived Referrals[] @relation("referee_referrals")
-  activities Activity[]
+model users {
+  id                 Int          @id @default(autoincrement())
+  username           String       @unique @db.VarChar(255)
+  rank_id            Int
+  coin_balance       Int          @default(0)
+  created_at         DateTime     @default(now())
+  telegram_id        BigInt       @unique
+  activities         activity[]
+  friendlist_as_friend friendlist[] @relation("friend_friendlist")
+  friendlist_as_user   friendlist[] @relation("user_friendlist")
+  referrals_received  referrals?   @relation("referee_referrals")
+  referrals_referred  referrals[]  @relation("referrer_referrals")
+  rank               rank         @relation(fields: [rank_id], references: [id])
 
   @@map("users")
 }
 
-model Rank {
-  id        Int      @id @default(autoincrement())
-  rankName  String   @db.VarChar(255)
-  minPoints Int
-  users     User[]
+model rank {
+  id        Int     @id @default(autoincrement())
+  rank_name String  @db.VarChar(255)
+  min_points Int
+  users     users[]
 
-  @@map("ranks")
+  @@map("rank")
 }
 
-model Friendlist {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  friendId  Int
-  createdAt DateTime @default(now())
-  status    String   @db.VarChar(50)
-  
-  user   User @relation("user_friendlist", fields: [userId], references: [userId])
-  friend User @relation("friend_friendlist", fields: [friendId], references: [userId])
+model friendlist {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  status     String   @db.VarChar(50)
+  telegram_id BigInt
+  friend_id   BigInt
+  friend     users    @relation("friend_friendlist", fields: [friend_id], references: [telegram_id])
+  user       users    @relation("user_friendlist", fields: [telegram_id], references: [telegram_id])
 
+  @@unique([telegram_id, friend_id])
   @@map("friendlist")
 }
 
-model Referrals {
-  id            Int      @id @default(autoincrement())
-  referrerId    Int
-  refereeId     Int @unique
-  rewardStatus  String   @db.VarChar(50)
-  createdAt     DateTime @default(now())
-
-  referrer User @relation("referrer_referrals", fields: [referrerId], references: [userId])
-  referee  User @relation("referee_referrals", fields: [refereeId], references: [userId])
+model referrals {
+  id           Int      @id @default(autoincrement())
+  reward_status String   @db.VarChar(50)
+  created_at    DateTime @default(now())
+  referrer_id   BigInt
+  referee_id    BigInt   @unique
+  referee      users    @relation("referee_referrals", fields: [referee_id], references: [telegram_id])
+  referrer     users    @relation("referrer_referrals", fields: [referrer_id], references: [telegram_id])
 
   @@map("referrals")
 }
 
-model Activity {
+model activity {
   id           Int      @id @default(autoincrement())
-  userId       Int
-  activityType String   @db.VarChar(255)
-  coinsEarned  Int
+  activity_type String   @db.VarChar(255)
+  coins_earned  Int
   timestamp    DateTime @default(now())
+  telegram_id   BigInt
+  user         users    @relation(fields: [telegram_id], references: [telegram_id])
 
-  user User @relation(fields: [userId], references: [userId])
-
-  @@map("activities")
+  @@map("activity")
 }
-
-// model Transaction {
-//   id           Int       @id @default(autoincrement())
-//   userId       Int
-//   type         String    @db.VarChar(50) // e.g., "income", "expense", "reward"
-//   amount       Int                  // Positive or negative value based on type
-//   balanceAfter Int                  // Coin balance after the transaction
-//   createdAt    DateTime @default(now())
-//   description  String?   @db.VarChar(255) // Optional description of the transaction
-
-//   user User @relation(fields: [userId], references: [userId])
-
-//   @@map("transactions")
-// }

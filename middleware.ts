@@ -1,33 +1,19 @@
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextRequest, NextResponse } from "next/server";
+import { getSession, updateSession } from "@/lib/telegram/telegramSession";
 
-export async function middleware(req: NextRequest) {
-  const dashboardPath = "/dashboard";
-  const loginPath = "/";
+export async function middleware(request: NextRequest) {
+  const session = await getSession();
 
-  const res = NextResponse.next();
-
-  const supabase = createMiddlewareClient({ req, res });
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (session && req.nextUrl.pathname === loginPath) {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = dashboardPath;
-    return NextResponse.redirect(redirectUrl);
+  if (!session) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (!session && req.nextUrl.pathname.startsWith(dashboardPath)) {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = loginPath;
-    return NextResponse.redirect(redirectUrl);
-  }
+  const response = await updateSession(request);
+  if (response) return response;
 
-  return res;
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*"],
+  matcher: ["/dashboard/:path*"], 
 };

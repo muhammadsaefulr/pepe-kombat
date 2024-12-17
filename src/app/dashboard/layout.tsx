@@ -1,7 +1,7 @@
 import BottomNavDashboard from "@/components/BottomNavDashboard";
 import MainLayout from "@/components/MainLayout";
 import { NavbarDashboard } from "@/components/NavbarDashboard";
-import { redirect } from "next/navigation";
+import { getSession } from "@/lib/telegram/telegramSession";
 
 export default async function DashboardLayout({
   children,
@@ -9,22 +9,12 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
 
-  // const supabase = createClientServ();
-
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
-
-  // if (!user) {
-  //   return redirect("/")
-  // } else {
-  //   console.log(user)
-  // }
+  const session = await getSession();
 
   return (
     <div className="w-full flex justify-center mx-auto lg:w-1/3">
       <MainLayout>
-        <NavbarDashboard id={11} />
+        <NavbarDashboard username = {session.user.username} />
         {children}
         <BottomNavDashboard />
       </MainLayout>

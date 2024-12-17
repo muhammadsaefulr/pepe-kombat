@@ -24,7 +24,7 @@ export async function decryptJWT(input: any): Promise<any>{
 
 export async function getSession() {
     const session = cookies().get("session")?.value
-    console.log("User Session Value in getsession : ", session);
+    // console.log("User Session Value in getsession : ", session);
     if(!session) return null
 
     return await decryptJWT(session);

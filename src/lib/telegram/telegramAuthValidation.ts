@@ -1,7 +1,7 @@
 import * as crypto from 'crypto'
 
 interface User {
-  id?: string
+  id?: number
   username?: string
   [key: string]: any
 }

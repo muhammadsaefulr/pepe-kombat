@@ -1,4 +1,3 @@
-"use client";
 import { formLoginSchema } from "@/lib/form-schema";
 import { useState } from "react";
 import { z } from "zod";
@@ -30,7 +29,7 @@ const LoginForm: React.FC = () => {
 
     const result = formLoginSchema.safeParse(formData);
 
-    console.log(result);
+    // console.log(result);
 
     if (!result.success) {
       const validationErrors: { [key: string]: string } = {};
@@ -40,7 +39,7 @@ const LoginForm: React.FC = () => {
       setErrors(validationErrors);
       return;
     } else {
-      submitLogin(formData)
+      // submitLogin(formData)
     }
 
     setErrors({});
