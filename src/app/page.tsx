@@ -7,6 +7,7 @@ import { getSession } from "@/lib/telegram/telegramSession";
 import { useTelegramLogin } from "@/lib/telegram/telegramLogin";
 import { useRouter } from "next/navigation";
 import { useGetSession } from "@/lib/tanstack/tanstackquery-handler";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function Page() {
 
@@ -22,6 +23,10 @@ export default function Page() {
       route.push("/dashboard")
     }
   }, [session]);
+
+  if(isLoading){
+    return <LoadingSpinner/>
+  }
 
   return (
     <div className="mx-auto py-9 relative">
