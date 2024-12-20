@@ -1,8 +1,19 @@
 import { jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { WebAppUser } from "@twa-dev/types";
 
 const key = new TextEncoder().encode(process.env.JWT_SECRET);
+
+interface LoginTelegramResp {
+    user: {
+        telegramId: number,
+        username: string
+    },
+    expires: string,
+    iat: number,
+    exp: number
+}
 
 export const SESSION_DURATION = 60 * 60 * 1000;
 
@@ -22,12 +33,12 @@ export async function decryptJWT(input: any): Promise<any>{
     return payload
 }
 
-export async function getSession() {
-    const session = cookies().get("session")?.value
+export async function getSession(): Promise<LoginTelegramResp | null> {
+    const session: unknown = cookies().get("session")?.value
     // console.log("User Session Value in getsession : ", session);
     if(!session) return null
 
-    return await decryptJWT(session);
+    return await decryptJWT(session as WebAppUser);
 }
 
 export async function updateSession(request:NextRequest) {

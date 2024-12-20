@@ -4,10 +4,10 @@ import { encryptJWT, SESSION_DURATION } from '@/lib/telegram/telegramSession'
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel'
 import { PrismaClient } from '@prisma/client';
+import { db } from "@/lib/db";
 
 export const dynamic = 'force-dynamic'
 
-const prisma = new PrismaClient();
 const app = new Hono().basePath('/api')
 
 app.post('/auth/telegram', async (c) => {
@@ -22,12 +22,12 @@ app.post('/auth/telegram', async (c) => {
 
       const user = { telegramId: validationResult.user.id ?? 0, username: validationResult.user.username }
 
-      const findUser = await prisma.users.findUnique({ where: { telegram_id: user.telegramId } })
+      const findUser = await db.users.findUnique({ where: { telegram_id: user.telegramId } })
 
       // console.log("find user: ", findUser)
 
       if (!findUser) {
-        await prisma.users.create({
+        await db.users.create({
           data: {
             telegram_id: user.telegramId,
             username: user.username as string,

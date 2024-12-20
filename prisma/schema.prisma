@@ -36,7 +36,6 @@ model rank {
 model friendlist {
   id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())
-  status     String   @db.VarChar(50)
   telegram_id BigInt
   friend_id   BigInt
   friend     users    @relation("friend_friendlist", fields: [friend_id], references: [telegram_id])

@@ -3,18 +3,30 @@ import LoginTelegramBtn from "@/components/forms/login-telegram";
 import MainLayout from "@/components/MainLayout";
 import Image from "next/image";
 import { useEffect } from "react";
-import { getSession } from "@/lib/telegram/telegramSession";
 import { useTelegramLogin } from "@/lib/telegram/telegramLogin";
 import { useRouter } from "next/navigation";
-import { useGetSession } from "@/lib/tanstack/tanstackquery-handler";
+import { useAddFriendList, useGetSession } from "@/lib/tanstack/tanstackquery-handler";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import WebApp from '@twa-dev/sdk'
 
 export default function Page() {
 
   const route = useRouter();
 
-  const {data: session, isLoading} = useGetSession();
+  const { data: session, isLoading } = useGetSession();
   const { authenticateUser } = useTelegramLogin();
+
+  if (typeof window !== 'undefined') {
+    WebApp.ready();
+    WebApp.initData
+
+    const startParam = WebApp.initDataUnsafe.start_param
+
+    if (startParam && startParam != undefined) {
+      const { data: addflresult } = useAddFriendList({ reffId: startParam })
+      console.log(addflresult)
+    }
+  }
 
   useEffect(() => {
     if (!session) {
@@ -24,8 +36,8 @@ export default function Page() {
     }
   }, [session]);
 
-  if(isLoading){
-    return <LoadingSpinner/>
+  if (isLoading) {
+    return <LoadingSpinner />
   }
 
   return (

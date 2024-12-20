@@ -18,14 +18,17 @@ export const leaderboardUserData = [
 
 export const dummyFriendList = [
   {
+    id: 1,
     username: "Users One",
     balance: 2000000,
   },
   {
+    id: 2,
     username: "Users Two",
     balance: 2000000,
   },
   {
+    id: 3,
     username: "Users Three",
     balance: 2000000,
   },

@@ -10,6 +10,25 @@ interface LoginResponse {
   };
 }
 
+interface UserPepeRes {
+  telegram_id: bigint;
+  username: string;
+}
+
+interface FriendListResponse {
+  data: UserPepeRes[];
+}
+
+interface SessionResponse {
+  exp: number,
+  expires: string,
+  iat: number,
+  user: {
+    telegramId: BigInt
+    username: string,
+  }
+}
+
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const useLogin = () => {
@@ -29,7 +48,7 @@ export const useLogin = () => {
 };
 
 export const useGetSession = () => {
-  return useQuery({
+  return useQuery<SessionResponse | null>({
     queryKey: ['getSession'],
     queryFn: async () => {
       const resp = await axios.get(`${apiUrl}/session`);
@@ -37,7 +56,6 @@ export const useGetSession = () => {
     },
   });
 };
-
 
 export const useGetProfile = ({ uid }: { uid: string }) => {
   return useQuery({
@@ -50,3 +68,23 @@ export const useGetProfile = ({ uid }: { uid: string }) => {
     },
   });
 };
+
+export const useAddFriendList = ({ reffId }: { reffId: string }) => {
+  return useQuery({
+    queryKey: ["addFriendList", reffId],
+    queryFn: async () => {
+      const response = await axios.put(`${apiUrl}/friendlist?uid=${reffId}`);
+      return response.data;
+    },
+  });
+}
+
+export const useGetFriendlist = () => {
+  return useQuery<FriendListResponse | null>({
+    queryKey: ["getFriendlist"],
+    queryFn: async () => {
+      const response = await axios.get(`${apiUrl}/friendlist`);
+      return response.data
+    }
+  })
+}
