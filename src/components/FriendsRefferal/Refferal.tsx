@@ -7,7 +7,7 @@ interface ReferralFriendsProps {
 }
 
 const Refferal: React.FC<ReferralFriendsProps> = ({ userId }) => {
-    const INVITE_URL = "https://t.me/dev_pepekombat_bot/pepekombat_dev10"
+    const INVITE_URL = "https://t.me/dev_pepekombat_bot/pepekombat_devmode10"
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
