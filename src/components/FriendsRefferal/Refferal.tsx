@@ -9,13 +9,22 @@ interface ReferralFriendsProps {
 const Refferal: React.FC<ReferralFriendsProps> = ({ userId }) => {
     const INVITE_URL = "https://t.me/dev_pepekombat_bot/pepekombat_dev10"
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            WebApp.ready();
+        }
+    }, []);
+
     const handleInviteFriend = () => {
         const inviteLink = `${INVITE_URL}?startapp=${userId}`;
         const shareText = `Join me on Pepe Kombat!`;
         const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(
             inviteLink
         )}&text=${encodeURIComponent(shareText)}`;
-        WebApp.openTelegramLink(fullUrl);
+
+        if (typeof window !== 'undefined') {
+            WebApp.openTelegramLink(fullUrl);
+        }
     };
 
     return (

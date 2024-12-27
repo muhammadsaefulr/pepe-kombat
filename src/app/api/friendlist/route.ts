@@ -1,12 +1,13 @@
 import { db } from '@/lib/db'
 import { getSession } from '@/lib/telegram/telegramSession'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export async function PUT(req: NextRequest) {
+export async function POST(req: Request) {
+  const url = new URL(req.url);
+  const searchParams = new URLSearchParams(url.search);
+  const uid = searchParams.get("uid")
+
   try {
-    const url = new URL(req.url);
-    const searchParams = new URLSearchParams(url.search);
-    const uid = searchParams.get("uid")
 
     const session = await getSession()
     if (!session) {
@@ -20,8 +21,8 @@ export async function PUT(req: NextRequest) {
     const uidBigInt = BigInt(uid);
     const sesBigInt = BigInt(session.user.telegramId)
 
-    console.log("uid test: ", uidBigInt)
-    console.log("session id: ", session.user.telegramId)
+    // console.log("uid test: ", uidBigInt)
+    // console.log("session id: ", session.user.telegramId)
 
     const isUidExist = await db.users.findUnique({
       where: {
@@ -46,7 +47,7 @@ export async function PUT(req: NextRequest) {
       },
     });
 
-    if (existingFriends) {
+    if (existingFriends.length > 0) {
       return NextResponse.json({ message: `User Sudah Ada Dalam Friendlist !` })
     }
 
@@ -65,7 +66,7 @@ export async function PUT(req: NextRequest) {
 
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(req: Request) {
   try {
     const session = await getSession()
     if (!session) {

@@ -3,9 +3,7 @@ import { dummyFriendList } from "@/app/hooks/data-dummy";
 import MenuBar from "@/components/MenuBar";
 import React, { useEffect, useState } from "react";
 import Refferal from "@/components/FriendsRefferal/Refferal";
-import WebApp from "@twa-dev/sdk"
-import { useGetFriendlist } from "@/lib/tanstack/tanstackquery-handler";
-
+import { useGetFriendlist, useGetSession } from "@/lib/tanstack/tanstackquery-handler";
 
 const dataMenuBar = [
   {
@@ -27,21 +25,11 @@ const dataMenuBar = [
 
 
 export default function Friendlist() {
-  const [userId, setUserId] = useState(0);
-  const {data: friends, isLoading} = useGetFriendlist()
+  const { data: friends, isLoading } = useGetFriendlist()
+  const { data: session, isLoading: isLoadSess } = useGetSession()
+  const userId = session?.user.telegramId ? Number(session.user.telegramId) : 0;
 
-  useEffect(() => {
-    const initWebApp = async () => {
-      if (typeof window !== 'undefined') {
-        WebApp.ready();
-        setUserId(WebApp.initDataUnsafe.user?.id || 0);
-      }
-    };
-
-    initWebApp()
-  }, [])
-
-  console.log("data friends in pagetsx",friends)
+  // console.log("data friends in pagetsx", friends)
 
   return (
     <div className="">
@@ -78,7 +66,7 @@ export default function Friendlist() {
                 </div>
               ))
             ) : (
-              <p className="text-white mx-auto pt-3">No friends have joined the game yet.</p>
+              <p className="text-black font-semibold mx-auto pt-3">No friends have joined the game yet.</p>
             )}
 
           </div>

@@ -10,23 +10,21 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import WebApp from '@twa-dev/sdk'
 
 export default function Page() {
-
   const route = useRouter();
-
   const { data: session, isLoading } = useGetSession();
   const { authenticateUser } = useTelegramLogin();
 
+  let start_param;
+
   if (typeof window !== 'undefined') {
-    WebApp.ready();
-    WebApp.initData
+      WebApp.ready();
+      WebApp.initData;
 
-    const startParam = WebApp.initDataUnsafe.start_param
-
-    if (startParam && startParam != undefined) {
-      const { data: addflresult } = useAddFriendList({ reffId: startParam })
-      console.log(addflresult)
-    }
+      start_param = WebApp.initDataUnsafe.start_param;
+      // console.log("info start param: ",start_param)
   }
+
+  const { data: addflresult } = useAddFriendList({ reffId: start_param || "" });
 
   useEffect(() => {
     if (!session) {

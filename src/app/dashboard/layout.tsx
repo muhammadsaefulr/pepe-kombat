@@ -14,7 +14,7 @@ export default async function DashboardLayout({
   return (
     <div className="w-full flex justify-center mx-auto lg:w-1/3">
       <MainLayout>
-        <NavbarDashboard username = {session.user.username} />
+        <NavbarDashboard username = {session?.user.username!} />
         {children}
         <BottomNavDashboard />
       </MainLayout>

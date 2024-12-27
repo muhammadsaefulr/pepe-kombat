@@ -34,7 +34,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const useLogin = () => {
   return useMutation<LoginResponse, AxiosError, WebAppUser>({
     mutationFn: async (data: WebAppUser) => {
-      const response = await axios.post<LoginResponse>(`/api/auth/telegram`, data, {
+      const response = await axios.post<LoginResponse>(`/api/auth`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -73,7 +73,7 @@ export const useAddFriendList = ({ reffId }: { reffId: string }) => {
   return useQuery({
     queryKey: ["addFriendList", reffId],
     queryFn: async () => {
-      const response = await axios.put(`${apiUrl}/friendlist?uid=${reffId}`);
+      const response = await axios.post(`${apiUrl}/friendlist?uid=${reffId}`);
       return response.data;
     },
   });
@@ -84,6 +84,16 @@ export const useGetFriendlist = () => {
     queryKey: ["getFriendlist"],
     queryFn: async () => {
       const response = await axios.get(`${apiUrl}/friendlist`);
+      return response.data
+    }
+  })
+}
+
+export const useLogoutSession = () => {
+  return useQuery({
+    queryKey: [],
+    queryFn: async () => {
+      const response = await axios.delete(`${apiUrl}/auth/logout`)
       return response.data
     }
   })
